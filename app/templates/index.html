@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Prediction Based on Customer Behavior</title>
+    <script>
+        async function makePrediction(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            const response = await fetch('/predict/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById('prediction-result').innerText = 'Risk Flag: ' + result.prediction;
+        }
+    </script>
+</head>
+<body>
+    <h1>Loan Prediction Based on Customer Behavior</h1>
+    <form onsubmit="makePrediction(event)">
+        <label for="Income">Income:</label>
+        <input type="number" id="Income" name="Income" required><br><br>
+
+        <label for="Age">Age:</label>
+        <input type="number" id="Age" name="Age" required><br><br>
+
+        <label for="Experience">Experience:</label>
+        <input type="number" id="Experience" name="Experience" required><br><br>
+
+        <label for="Marrital_status">Marital Status:</label>
+        <input type="text" id="Marrital_status" name="Marrital_status" required><br><br>
+
+        <label for="House_Ownership">House Ownership:</label>
+        <input type="text" id="House_Ownership" name="House_Ownership" required><br><br>
+
+        <label for="Car_Ownership">Car Ownership:</label>
+        <input type="text" id="Car_Ownership" name="Car_Ownership" required><br><br>
+
+        <label for="Profession">Profession:</label>
+        <input type="text" id="Profession" name="Profession" required><br><br>
+
+        <label for="CITY">City:</label>
+        <input type="text" id="CITY" name="CITY" required><br><br>
+
+        <label for="STATE">State:</label>
+        <input type="text" id="STATE" name="STATE" required><br><br>
+
+        <label for="CURRENT_JOB_YRS">Current Job Years:</label>
+        <input type="number" id="CURRENT_JOB_YRS" name="CURRENT_JOB_YRS" required><br><br>
+
+        <label for="CURRENT_HOUSE_YRS">Current House Years:</label>
+        <input type="number" id="CURRENT_HOUSE_YRS" name="CURRENT_HOUSE_YRS" required><br><br>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <h2 id="prediction-result"></h2>
+</body>
+</html>
